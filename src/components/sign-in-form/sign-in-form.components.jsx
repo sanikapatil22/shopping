@@ -29,7 +29,7 @@ const handleSubmit = async (event) => {
         console.log("Submit fired ✅");
         try {
             const {user} = await signInAuthWithEmailAndPassword(email,password);
-           setCurrentUser(user);
+        //   setCurrentUser(user);          
             resetFormFields();
 
         } catch (error) {
