@@ -13,7 +13,8 @@ import {
     doc,
     getDoc,
     setDoc,
-    collection, writeBatch          //for uploading data on firebase
+    collection, writeBatch,         //for uploading data on firebase
+    query, getDocs                  //for fetching data from firestore
 } from 'firebase/firestore';
 const firebaseConfig = {
   apiKey: "AIzaSyD7K2hefracjjCRkcgA8ujIfNnv1hRq6A8",
@@ -42,7 +43,7 @@ export const signInWithGooglePopup = () => signInWithPopup(auth,provider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth,provider);
 
 export const db = getFirestore();
-
+//adding data to firebase
 export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
     const collectionRef = collection(db,collectionKey);
     const batch = writeBatch(db);
@@ -54,6 +55,20 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
     await batch.commit();  // <-- this actually saves to Firestore
      console.log("Batch committed ✅");
 }
+//fetching data from firebase
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db,'categories');
+    const q = query(collectionRef);
+    const querySnapshot = await getDocs(q);
+
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const {title, items} = docSnapshot.data();
+        acc[title.toLowerCase()] = items;
+        return acc;
+    }, {});
+    return categoryMap;
+}
+
 
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation={}) => {
     if(!userAuth) return;
@@ -104,3 +119,17 @@ export const onAuthStateChangedListener = (callback) =>
 	// •	object.title.toLowerCase() → becomes the document’s ID.
 	// •	If title = "Hats", ID = "hats".
 	// •	Path becomes /categories/hats.
+
+
+
+//QUERY
+// In databases (like Firestore, SQL, MongoDB, etc.), a query is a way of asking the database for specific data that matches certain conditions.
+
+// Think of it like asking:
+// 👉 “Hey database, give me all the documents where title = 'Hats'”
+
+// So instead of always fetching everything, queries let you filter, sort, and limit results.
+
+
+
+//A snapshot is a representation of the data returned from Firestore at a particular moment in time.
