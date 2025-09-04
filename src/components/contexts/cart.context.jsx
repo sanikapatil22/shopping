@@ -63,8 +63,8 @@ const INITIAL_STATE = {
   cartTotal: 0,
 };
 
-const cartReducer = (state, action) => {
-  // The reducer (cartReducer) receives this action and updates the state with the new values.
+const userReducer = (state, action) => {
+  // The reducer (userReducer) receives this action and updates the state with the new values.
   const { type, payload } = action;
   switch (type) {
     case CART_ACTION_TYPES.SET_CART_ITEMS: // action
@@ -78,13 +78,13 @@ const cartReducer = (state, action) => {
         isCartOpen: payload,
       };
     default:
-      throw new Error(`Unhandled type ${type} in cartReducer`);
+      throw new Error(`Unhandled type ${type} in userReducer`);
   }
 };
 
 export const CartProvider = ({ children }) => {
   const [{ isCartOpen, cartItems, cartCount, cartTotal }, dispatch] =
-    useReducer(cartReducer, INITIAL_STATE);
+    useReducer(userReducer, INITIAL_STATE);
 
   // helper to update reducer with recalculated values
   const updateCartItemsReducer = (newCartItems) => {
@@ -216,3 +216,155 @@ export const CartProvider = ({ children }) => {
 // 	3.	Shallow copies, not deep
 // 	•	When you do [...cartItems], you’re only copying the references, not cloning entire objects deeply.
 // 	•	So if you have 10 cart items, you’re just making a new array that points to the same 10 item objects.
+
+
+
+
+
+
+// import { createContext, useReducer } from "react";
+
+// const addItemToCart = (cartItems, productToAdd) => {
+//   const existingCartItem = cartItems.find(
+//     (cartItem) => cartItem.id === productToAdd.id
+//   );
+
+//   if (existingCartItem) {
+//     // return a new array with updated quantity
+//     return cartItems.map((item) =>
+//       item.id === productToAdd.id
+//         ? { ...item, quantity: item.quantity + 1 }
+//         : item
+//     );
+//   }
+
+//   return [...cartItems, { ...productToAdd, quantity: 1 }];
+// };
+
+// const removeCartItem = (cartItems, cartItemToRemove) => {
+//   const existingCartItem = cartItems.find(
+//     (cartItem) => cartItem.id === cartItemToRemove.id
+//   );
+
+//   if (existingCartItem.quantity === 1) {
+//     return cartItems.filter(
+//       (cartItem) => cartItem.id !== cartItemToRemove.id
+//     );
+//   }
+
+//   // return a new array with updated quantity
+//   return cartItems.map((cartItem) =>
+//     cartItem.id === cartItemToRemove.id
+//       ? { ...cartItem, quantity: cartItem.quantity - 1 }
+//       : cartItem
+//   );
+// };
+
+// const clearCartItem = (cartItems, cartItemToClear) => {
+//   return cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
+// };
+
+// export const CartContext = createContext({
+//   isCartOpen: false,
+//   setIsCartOpen: () => {},
+//   cartItems: [],
+//   addItemsToCart: () => {},
+//   removeItemToCart: () => {},
+//   clearItemFromCart: () => {},
+//   cartCount: 0,
+//   cartTotal: 0,
+// });
+
+// const CART_ACTION_TYPES = {
+//   SET_CART_ITEMS: "SET_CART_ITEMS",
+//   SET_IS_CART_OPEN: "SET_IS_CART_OPEN",
+// };
+
+// const INITIAL_STATE = {
+//   isCartOpen: false,
+//   cartItems: [],
+//   cartCount: 0,
+//   cartTotal: 0,
+// };
+
+// const cartReducer = (state, action) => {
+//   // The reducer (cartReducer) receives this action and updates the state with the new values.
+//   const { type, payload } = action;
+//   switch (type) {
+//     case CART_ACTION_TYPES.SET_CART_ITEMS: // action
+//       return {
+//         ...state, // copy all the existing properties of the old state into the new object
+//         ...payload, // overwrite cartItems, cartCount, and cartTotal
+//       };
+//     case CART_ACTION_TYPES.SET_IS_CART_OPEN: // action
+//       return {
+//         ...state,
+//         isCartOpen: payload,
+//       };
+//     default:
+//       throw new Error(`Unhandled type ${type} in cartReducer`);
+//   }
+// };
+
+// export const CartProvider = ({ children }) => {
+//   const [{ isCartOpen, cartItems, cartCount, cartTotal }, dispatch] =
+//     useReducer(cartReducer, INITIAL_STATE);
+
+//   // helper to update reducer with recalculated values
+//   const updateCartItemsReducer = (newCartItems) => {
+//     const newCartCount = newCartItems.reduce(
+//       (total, cartItem) => total + cartItem.quantity,
+//       0
+//     );
+
+//     const newCartTotal = newCartItems.reduce(
+//       (total, cartItem) => total + cartItem.quantity * cartItem.price,
+//       0
+//     );
+
+//     dispatch({
+//       type: CART_ACTION_TYPES.SET_CART_ITEMS,
+//       payload: {
+//         cartItems: newCartItems,
+//         cartCount: newCartCount,
+//         cartTotal: newCartTotal,
+//       },
+//     });
+//   };
+
+//   // actions
+//   const addItemsToCart = (productToAdd) => {
+//     const newCartItems = addItemToCart(cartItems, productToAdd);
+//     updateCartItemsReducer(newCartItems);
+//   };
+
+//   const removeItemToCart = (cartItemToRemove) => {
+//     const newCartItems = removeCartItem(cartItems, cartItemToRemove);
+//     updateCartItemsReducer(newCartItems);
+//   };
+
+//   const clearItemFromCart = (cartItemToClear) => {
+//     const newCartItems = clearCartItem(cartItems, cartItemToClear);
+//     updateCartItemsReducer(newCartItems);
+//   };
+
+//   const setIsCartOpen = (bool) => {
+//     dispatch({ type: CART_ACTION_TYPES.SET_IS_CART_OPEN, payload: bool });
+//   };
+
+//   const value = {
+//     isCartOpen,
+//     setIsCartOpen,
+//     addItemsToCart,
+//     cartItems,
+//     cartCount,
+//     removeItemToCart,
+//     clearItemFromCart,
+//     cartTotal,
+//   };
+
+//   return (
+//     <CartContext.Provider value={value}>{children}</CartContext.Provider>
+//   );
+// };
+
