@@ -8,8 +8,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store-for-redux/store';
 
-import { UserProvider } from './components/contexts/user.context';
-import { CategoriesProvider } from './components/contexts/categories.context';
 import { CartProvider } from './components/contexts/cart.context';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,11 +15,11 @@ root.render(
     <Provider store={store}>
     <BrowserRouter>
    {/* // <UserProvider> */}
-      <CategoriesProvider>
+
         <CartProvider>
           <App />
         </CartProvider>
-      </CategoriesProvider>
+
     {/* </UserProvider> */}
     </BrowserRouter>
     </Provider>

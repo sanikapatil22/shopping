@@ -1,10 +1,11 @@
 import { useContext } from "react";
-import { CategoriesContext } from "../../components/contexts/categories.context";
+import { selectCategoriesMap } from "../../store-for-redux/categories/category.selector";
 import CategoryPreview from "../../components/category-preview/category-preview.component";
+import { useSelector } from "react-redux";
 
 
 const CategoriesPreview = () =>{
-    const {categoriesMap} = useContext(CategoriesContext);
+    const categoriesMap = useSelector(selectCategoriesMap);
     return (
         <> {
         Object.keys(categoriesMap).map(title =>{ //array of string where it contains "hats" "jackets"   key values & mapping through each key values
