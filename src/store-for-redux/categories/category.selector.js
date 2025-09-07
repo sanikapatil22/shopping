@@ -5,6 +5,15 @@ export const selectCategoriesMap = (state) => state.categories.categories
         return acc;
     }, {}
 );
+//all this just to convert the array into a map so taht searching becomes easy
+// Why it’s useful:
+// 	•	Fast lookups:
+// 	•	Array → O(n) (must loop each time).
+// 	•	Map → O(1) (direct key access).
+// 	•	Cleaner code:
+// Instead of:categories.find(cat => cat.title === "Hats").items
+// You can just do:
+// categoriesMap["hats"]
 
 // Your selector is taking the categories array from Redux state 
 // and turning it into a map (object) where each key is the category title 
