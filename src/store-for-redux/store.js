@@ -28,7 +28,7 @@ export const store = createStore(rootReducer, undefined, composedEnhancers);
 
 
 
-
+//if nothing's changed, dont bother rerendering
 
 //dispatch(action) → store → rootReducer → each reducer checks action → update state slice → store holds new global state
 

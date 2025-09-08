@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store-for-redux/store';
 
-import { CartProvider } from './components/contexts/cart.context';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -16,9 +16,9 @@ root.render(
     <BrowserRouter>
    {/* // <UserProvider> */}
 
-        <CartProvider>
+        {/* <CartProvider> */}
           <App />
-        </CartProvider>
+        {/* </CartProvider> */}
 
     {/* </UserProvider> */}
     </BrowserRouter>
